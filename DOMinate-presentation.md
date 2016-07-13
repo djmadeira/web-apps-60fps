@@ -47,7 +47,7 @@ You can load JS asynchronously fairly trivially by placing the script tag at the
 
 ```html
 <head>
-    <!-- Styles + Images will be loaded at the same time as JS is downloaded and parsed -->
+    <!-- Styles + Images will be loaded in parallel with JS -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -56,9 +56,18 @@ You can load JS asynchronously fairly trivially by placing the script tag at the
 </body>
 ```
 
-There's a more modern way to do this: the `async` attribute.
+There's a more modern way to do this: the `async` attribute. (also `defer`)
 
-[ Code sample ]
+```html
+<head>
+    <!-- JS will be downloaded in parallel, executed "whenever" -->
+    <link rel="stylesheet" href="styles.css">
+    <script src="non-blocking-stuff.js" async></script>
+</head>
+<body>
+    <img src="users/dj/memes/morpheus.jpg">
+</body>
+```
 
 [ Demo: async ]
 
