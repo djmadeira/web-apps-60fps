@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path"
 )
 
 const BUFFER_SIZE = 32
@@ -12,22 +13,30 @@ const BUFFER_SIZE = 32
 func FileServer(w http.ResponseWriter, req *http.Request) {
 	var err error
 
-	path := req.URL.Path
+	requestPath := path.Clean(req.URL.Path)
+	requestExtension := path.Ext(requestPath)
 
-	if path[len(path)-1] == '/' {
-		path = path + "index.html"
+	if requestExtension == "" {
+		requestPath = requestPath + "/index.html"
 	}
 
-	file, err := os.Open("./web/" + path)
+	file, err := os.Open("./web/" + requestPath)
 
 	if err != nil {
-		log.Print("Could not open file path: ", path)
+		log.Print("Could not open file path: ", requestPath)
 		w.WriteHeader(http.StatusNotFound)
 		w.Write([]byte("404 Not Found"))
 		return
 	}
 
-	log.Print("Serving:", path)
+	switch requestExtension {
+	case ".css":
+		w.Header().Set("Content-Type", "text/css")
+	case ".js":
+		w.Header().Set("Content-Type", "application/javascript")
+	}
+
+	log.Print("Serving:", requestPath)
 
 	// My own custom slow server! For testing purposes.
 	var written int64

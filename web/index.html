@@ -1,0 +1,139 @@
+<head>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body class="markdown-body">
+<h1>DOMinate: How to make web pages at 60 fps</h1>
+
+<h2>Who cares? Let's just get "good enough" performance and fix the really atrocious things</h2>
+
+<ul>
+<li>UX research on why performance = better metrics</li>
+<li>Scary numbers of people leaving the mobile web, and with good reason: it sucks!</li>
+<li>We have to face it: the DOM is slow. Millions of $$$ every year go towards making the DOM suck less. (React, Redux, etc.)</li>
+<li>If we want the open web to win (I do), we have to do better. Like, a lot better.</li>
+</ul>
+
+<h2>"Our real bottleneck is back-end performance"</h2>
+
+<ul>
+<li>Maybe on your one-year-old iPhone 6S. What about on a 3 year old, sorta crappy Android tablet? (hint: it sucks. No real user would use our site on one.)</li>
+<li>That is the case for 80% of the stuff we do at Opower. But it's not going to stay that way. Our experiences are getting more ambitious and complex, and integrating more realtime data from more sources than before. We have to find a way to scale.</li>
+</ul>
+
+<p>http://pandawhale.com/post/59404/kung-fu-panda-enough-talk-lets-fight-gif</p>
+
+<h2>Why 60fps?</h2>
+
+<p>Talk about how this is the threshold beyond which user's can't tell.</p>
+
+<p>That means we have just 16ms every frame!!! And most of that is browser overhead. We have to shoot for 8-10ms or less every frame (but sometimes we can cheat).</p>
+
+<h2>How to take names and start DOMinating the browser</h2>
+
+<p>Plz stop saying DOMinating.</p>
+
+<p>https://www.youtube.com/watch?v=otUcnfiBTLs</p>
+
+<p>You can get 60fps for 90% of the stuff you do in the browser if you remember these 4 things:</p>
+
+<ol>
+<li>Keep JS off the critical rendering path</li>
+<li>Don't trigger Forced Synchronous Layout</li>
+<li>Do your heavy work during idle time (easier than you think)</li>
+<li>Animate using composit-friendly CSS properties</li>
+</ol>
+
+<h2>The critical rendering path: a browser story</h2>
+
+<p>The typical browser operates on a cycle every frame:</p>
+
+<p>JavaScript -> Style -> Layout -> Paint -> Composite</p>
+
+<h3>JavaScript</h3>
+
+<p>Everyone's favorite weakly-typed, Object-Oriented-but-not-really, Prototypal-but-not-really, Functional-but-not-really, completely ubiquitous and entirely unstoppable browser scripting language.</p>
+
+<p>The browser needs to download, parse (create an AST), and run this before it can do anything else, including make network requests.</p>
+
+<p><a href="/blocking-requests">DEMO</a></p>
+
+<p>You can load JS asynchronously fairly trivially by placing the script tag at the bottom of the body instead of in the head:</p>
+
+<p><code>html
+&lt;head&gt;
+    &lt;!-- Styles + Images will be loaded in parallel with JS --&gt;
+    &lt;link rel="stylesheet" href="styles.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;img src="users/dj/memes/morpheus.jpg"&gt;
+    &lt;script src="non-blocking-stuff.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+</code></p>
+
+<p>There's a more modern way to do this: the <code>async</code> attribute. (also <code>defer</code>)</p>
+
+<p><code>html
+&lt;head&gt;
+    &lt;!-- JS will be downloaded in parallel, executed "whenever" --&gt;
+    &lt;link rel="stylesheet" href="styles.css"&gt;
+    &lt;script src="non-blocking-stuff.js" async&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;img src="users/dj/memes/morpheus.jpg"&gt;
+&lt;/body&gt;
+</code></p>
+
+<p><a href="/async-requests">DEMO</a></p>
+
+<p>Browser support for this is <a href="http://caniuse.com/#search=async">"good enough"</a></p>
+
+<p>After initial load, the browser will execute JS based on events and timers every frame.</p>
+
+<h3>Style</h3>
+
+<p>Each frame, the browser must compute styles for every element on the page.</p>
+
+<p>This is hardly worth talking about; modern browsers are really, really good at computing CSS.</p>
+
+<p>Focus on writing bad (as opposed to completely unintelligible) CSS and hope for the best. </p>
+
+<h3>Layout</h3>
+
+<p>Layout and paint are the scary parts. These can and will happen multiple times in a frame (and remember we only have 8-10ms!)</p>
+
+<p>Layout is when the browser takes the CSS of every element and figures out where it belongs on the page.</p>
+
+<p>JS can force Layout to happen by reading from the DOM during execution. More on this in "Forced Synchronous Layout".</p>
+
+<h3>Paint</h3>
+
+<p>Paint is when the browser actually displays the elements on the page. This includes stuff like:</p>
+
+<ul>
+<li>Drawing CSS gradients</li>
+<li>Drawing images</li>
+<li>Drawing borders and shadows</li>
+</ul>
+
+<p>[ DEMO: using Chrome Dev Tools to inspect browser paints, composite layer borders ]</p>
+
+<h3>Composite</h3>
+
+<p>Browsers don't paint all at once. They have layers called "composite layers" that are painted separately and then combined in the composite step.</p>
+
+<p>Some CSS properties don't require paint, only composite:</p>
+
+<ul>
+<li>CSS transforms (<code>rotate</code>, <code>translate</code>, <code>scale</code>)</li>
+<li>Elements with <code>position: fixed</code></li>
+<li>(Sometimes) Elements with <code>position: absolute</code> (but be careful)</li>
+</ul>
+
+<h3>Don't block the critical rendering path: load your JS asynchronously if you can (you can)</h3>
+
+<h2>How to not trigger Forced Synchronous Layout</h2>
+
+<h3>What is a Forced Synchronous Layout?</h3>
+
+<p>FSL happens when you read from the DOM</p>
+</body>
