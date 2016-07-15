@@ -1,0 +1,29 @@
+body {
+    height: 800px;
+}
+
+.box {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 2rem;
+    position: relative;
+    display: inline-block;
+    background-image: url("/static/morpheus.png");
+    background-size: cover;
+    z-index: 99999999;
+    color: #fff;
+}
+
+.red {
+    border-color: #F8462C;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotateZ(0deg);
+    }
+
+    100% {
+        transform: rotateZ(360deg);
+    }
+}
