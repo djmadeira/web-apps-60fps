@@ -37,6 +37,15 @@ for (var el of animateEls) {
 function draw() {
     var windowWidth = window.innerWidth;
     var windowHeight = window.innerHeight;
+    var colors = [];
+
+    i = 0;
+    for (var el of animateEls) {
+        // Read from the DOM ahead of time
+        colors[i] = getComputedStyle(el).getPropertyValue('color');
+
+        i++;
+    }
 
     i = 0;
     for (var el of animateEls) {
@@ -67,11 +76,8 @@ function draw() {
             el.style.transform = 'matrix(' + (1) + ', ' + (0) + ', ' + (0) + ', ' + (1) + ', ' + renderOffsetX + ', ' + renderOffsetY + ')';
         }
 
-        // READ from the DOM in the same frame (forces the browser to calculate style)
-        var textColor = getComputedStyle(el).getPropertyValue('color');
-
         // Write to the DOM again
-        el.style.color = shiftRGBColor(textColor);
+        el.style.color = shiftRGBColor(colors[i]);
 
         i++;
     }
