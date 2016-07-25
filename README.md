@@ -10,5 +10,4 @@ for demonstration purposes/because I'm evil. The binary is included, so on must 
 
 And visit [localhost:8080](http://localhost:8080) to view the presentation and demos.
 
-The presentation does not walk you through using the dev tools to inspect these problems, which is basically half this talk.
-I'll try to post a link here to the recorded talk after I've done it.
+The presentation was recorded and is [available on Google Drive here](https://drive.google.com/a/opower.com/file/d/0B86g_Cj7sISlRUhSdUtZblhUVE0/view?usp=sharing).
