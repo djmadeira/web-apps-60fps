@@ -4,7 +4,7 @@ This talk will teach you the basics of writing fast JavaScript web apps.
 ## Running the presentation
 Part of the presentation is seeing how blocking requests affect performance, and this is difficult to do
 when files are served lightning-fast off the filesystem. To "fix" this, I wrote a slow webserver
-for demonstration purposes/because I'm evil. The binary is included, so on must \*nix systems you can just run:
+for demonstration purposes/because I'm evil. The binary is included, so on most \*nix systems you can just run:
 
 `./server`
 
