@@ -53,7 +53,7 @@
 <h3><a id="JavaScript_48"></a>JavaScript</h3>
 <p>The browser needs to download, parse, and run this before it can do anything else, but modern browsers
 are smart enough to do look-ahead and pro-actively make network requests in parallel.</p>
-<p><a href="/blocking-requests/">DEMO: Blocking requests</a></p>
+<p><a href="/web-apps-60fps/web-apps-60fps/blocking-requests/">DEMO: Blocking requests</a></p>
 </div>
 <div class="slide">
 <p>You can load JS asynchronously fairly trivially by placing the script tag at the bottom of the body instead of in the head:</p>
@@ -69,7 +69,7 @@ are smart enough to do look-ahead and pro-actively make network requests in para
 </div>
 <div class="slide">
 <p>There’s a more modern way to do this: the <code>async</code> attribute. (also <code>defer</code>)</p>
-<p><a href="/async-requests/">DEMO: Async requests</a></p>
+<p><a href="/web-apps-60fps/async-requests/">DEMO: Async requests</a></p>
 <pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
     <span class="hljs-comment">&lt;!-- JS will be downloaded in parallel, executed "whenever" --&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"styles.css"</span>&gt;</span>
@@ -110,7 +110,7 @@ are smart enough to do look-ahead and pro-actively make network requests in para
 <div class="slide">
 <h3><a id="Composite_127"></a>Composite</h3>
 <p>Browsers don’t paint all at once. They have layers called “composite layers” that are painted separately and then combined in the composite step.</p>
-<p><a href="/paint-composite">DEMO</a></p>
+<p><a href="/web-apps-60fps/paint-composite">DEMO</a></p>
 </div>
 <div class="slide">
 <h2><a id="How_to_not_trigger_Forced_Synchronous_Layout_132"></a>How to not trigger Forced Synchronous Layout</h2>
@@ -119,9 +119,9 @@ are smart enough to do look-ahead and pro-actively make network requests in para
 <p>What is the DOM? “Document Object Model”: Basically, the browser’s “live” version of the HTML document, updated in real time by scripts and styles.</p>
 </blockquote>
 <p>Forced Synchronous Layout (AKA Layout Thrashing) happens when you read from the DOM and write to the DOM “in the same frame” (synchronously).</p>
-<p><a href="/forced-synchronous-layout">DEMO</a></p>
+<p><a href="/web-apps-60fps/forced-synchronous-layout">DEMO</a></p>
 <p>It’s not that hard to avoid a forced synchronous layout in most cases; just defer writing to the DOM until after you’ve finished reading from it.</p>
-<p><a href="/forced-synchronous-layout-solution">DEMO</a></p>
+<p><a href="/web-apps-60fps/forced-synchronous-layout-solution">DEMO</a></p>
 </div>
 <div class="slide">
 <h3><a id="If_you_only_remember_one_thing_remember_this_Avoid_Forced_Synchronous_Layout_at_all_costs_152"></a>If you only remember one thing, remember this. Avoid Forced Synchronous Layout at all costs.</h3>
@@ -129,9 +129,9 @@ are smart enough to do look-ahead and pro-actively make network requests in para
 <div class="slide">
 <h3><a id="Saving_the_frames_doing_work_during_idle_time_157"></a>Saving the frames: doing work during idle time</h3>
 <p>There are lots of things you want to do at a regular interval, like animation. You should NEVER use <code>setTimeout</code> or <code>setInterval</code> for these things, ESPECIALLY animation.</p>
-<p><a href="/set-timeout-thrash">DEMO</a></p>
+<p><a href="/web-apps-60fps/set-timeout-thrash">DEMO</a></p>
 <p>Instead, use <code>requestAnimationFrame</code>.</p>
-<p><a href="/set-timeout-thrash-solution">DEMO</a></p>
+<p><a href="/web-apps-60fps/set-timeout-thrash-solution">DEMO</a></p>
 <p>In general, get your heavy code of the main thread: use promises and other async APIs for network requests, and check out more modern features like
 service workers for even more awesomeness!</p>
 </div>
