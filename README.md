@@ -10,4 +10,6 @@ for demonstration purposes/because I'm evil. The binary is included, so on most 
 
 And visit [localhost:8080](http://localhost:8080) to view the presentation and demos.
 
+Or, you can view it on [GitHub pages](https://djmadeira.github.io/web-apps-60fps/).
+
 The presentation was recorded and is [available on Google Drive here](https://drive.google.com/a/opower.com/file/d/0B86g_Cj7sISlRUhSdUtZblhUVE0/view?usp=sharing).
