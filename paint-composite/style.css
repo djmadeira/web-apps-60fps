@@ -8,7 +8,7 @@ body {
     margin-bottom: 2rem;
     position: relative;
     display: inline-block;
-    background-image: url("/static/morpheus.png");
+    background-image: url("/web-apps-60fps/static/morpheus.png");
     background-size: cover;
     z-index: 99999999;
     /*will-change: transform;*/
